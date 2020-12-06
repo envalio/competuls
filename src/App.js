@@ -1,24 +1,31 @@
 import React, {useState} from 'react';
 import { questions as data, results } from './db/data';
+import Button from '@material-ui/core/Button';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+
 import './App.css';
 
 function App() {
 
   const [questions, setQuetions] = useState(data);
-  const [resultVisible, handlResultVisible] = useState(false);
+  const [resultVisible, handleResultVisible] = useState(false);
 
   const handelChosenAnswer = (event) => {
     const [id, score] = event.currentTarget.value.split('-');
     setQuetions(questions.map(question => question.id === Number(id) ? ({ ...question, chosenScore: Number(score) }) : question))
   }
 
-  const handlSubmit = () => {
-    handlResultVisible(true)
+  const handleSubmit = () => {
+    handleResultVisible(true);
   }
 
-  const handlReset = () => {
+  const handleReset = () => {
     setQuetions(data);
-    handlResultVisible(false);
+    handleResultVisible(false);
   }
 
   const sum = questions.reduce((acc, el) => acc + el.chosenScore, 0);
@@ -30,41 +37,41 @@ function App() {
   return (
 
     <div className={'mainpage'}>
+      <h1>Test on what is you human ?</h1>
       {questions.map(question => (
-        <div key={question.id} className={'formQuestion'}>
-          
-          <div className={'formTest'} id={`question ${question.id}`} className={'formQuestion'}>
-
-              <p>{question.title}</p>
-              {question.answer.map(answer => (
-                <div>
-                  <input 
-                    id={`${question.id}-${answer.id}`}
-                    type='radio' 
-                    name={`question ${question.id}`} 
-                    value={`${question.id}-${answer.score}`}
-                    onChange={handelChosenAnswer}
-                    checked={question.chosenScore === answer.score}
-                    className={'formQuestion'}  
-                  />
-                  <label for={`${question.id}-${answer.id}`}>{answer.title}</label>
-                </div>
-              ))}
-
-          </div>
-        </div>
+        <FormControl key={question.id} component="fieldset" className={'formQuestion'}>
+          <FormLabel className={'pTitle'}>{question.title}</FormLabel>
+          {question.answer.map(answer => (
+            <RadioGroup>
+              <div className={'radiogroup'}> 
+                <FormControlLabel  
+                  id={`${question.id}-${answer.id}`}
+                  type='radio' 
+                  name={`question ${question.id}`} 
+                  value={`${question.id}-${answer.score}`}
+                  control={<Radio color="primary"/>}
+                  onChange={handelChosenAnswer}
+                  checked={question.chosenScore === answer.score} 
+                  disabled={resultVisible}
+                  className={'labelInput'}
+                />
+                <label for={`${question.id}-${answer.id}`}>{answer.title}</label>
+              </div> 
+            </RadioGroup>
+          ))}
+        </FormControl>
       ))}
-      <button onClick={handlSubmit} disabled={buttonDisabled}>
+      <Button onClick={handleSubmit} disabled={buttonDisabled} variant="outlined" color="secondary">
         Get answer
-      </button>
+      </Button>
       {resultVisible && (
         <div>
           <div>
             Result: {result ? result.title : ''}
           </div>
-          <button onClick={handlReset}>
+          <Button onClick={handleReset} variant="contained" color="secondary">
             Reset answer
-          </button>
+          </Button>
         </div>
       )}
     </div>
