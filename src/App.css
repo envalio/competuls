@@ -1,3 +1,6 @@
+body {
+    background: linear-gradient(#e66465, #9198e5);;
+}
 .mainpage {
     display: flex;
     align-items: center;
@@ -10,16 +13,24 @@
     padding-top: 20px;
 }
 .formQuestion {
-    display: flex;
-    flex-direction: row;
-}
-body {
-    /* background-color: crimson; */
-    background: linear-gradient(#e66465, #9198e5);;
+    display: flex !important; 
+    flex-direction: column !important;
+    
 }
 .pTitle {
-    /* margin: 120px; */
+    font-size: 20px !important;
+    margin: 20px !important;
 }
-.radiogroup {
-    
+.answerResult {
+    display: flex !important; 
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 20px !important;
+}
+.buttonSize {
+    width: 150px;
+    margin-top: 20px !important;
+}
+.result {
+    font-size: 20px !important;
 }

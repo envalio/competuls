@@ -38,42 +38,44 @@ function App() {
 
     <div className={'mainpage'}>
       <h1>Test on what is you human ?</h1>
-      {questions.map(question => (
-        <FormControl key={question.id} component="fieldset" className={'formQuestion'}>
-          <FormLabel className={'pTitle'}>{question.title}</FormLabel>
-          {question.answer.map(answer => (
-            <RadioGroup>
-              <div className={'radiogroup'}> 
-                <FormControlLabel  
-                  id={`${question.id}-${answer.id}`}
-                  type='radio' 
-                  name={`question ${question.id}`} 
-                  value={`${question.id}-${answer.score}`}
-                  control={<Radio color="primary"/>}
-                  onChange={handelChosenAnswer}
-                  checked={question.chosenScore === answer.score} 
-                  disabled={resultVisible}
-                  className={'labelInput'}
-                />
-                <label for={`${question.id}-${answer.id}`}>{answer.title}</label>
-              </div> 
-            </RadioGroup>
-          ))}
-        </FormControl>
-      ))}
-      <Button onClick={handleSubmit} disabled={buttonDisabled} variant="outlined" color="secondary">
-        Get answer
-      </Button>
-      {resultVisible && (
-        <div>
-          <div>
-            Result: {result ? result.title : ''}
+      <div className={'formQuestion'}>
+        {questions.map(question => (
+          <FormControl key={question.id} component="fieldset">
+            <FormLabel className={'pTitle'}>{question.title}</FormLabel>
+            {question.answer.map(answer => (
+              <RadioGroup>
+                <div className={'radiogroup'}> 
+                  <FormControlLabel  
+                    id={`${question.id}-${answer.id}`}
+                    type='radio' 
+                    name={`question ${question.id}`} 
+                    value={`${question.id}-${answer.score}`}
+                    control={<Radio color="primary"/>}
+                    onChange={handelChosenAnswer}
+                    checked={question.chosenScore === answer.score} 
+                    disabled={resultVisible}
+                    className={'labelInput'}
+                  />
+                  <label for={`${question.id}-${answer.id}`}>{answer.title}</label>
+                </div> 
+              </RadioGroup>
+            ))}
+          </FormControl>
+        ))}
+      </div>
+        <Button className={'buttonSize'} onClick={handleSubmit} disabled={buttonDisabled} variant="outlined" color="secondary">
+          Get answer
+        </Button>
+        {resultVisible && (
+          <div className={'answerResult'}>
+            <div className={'result'}>
+              Result: {result ? result.title : ''}
+            </div>
+            <Button className={'buttonSize'} onClick={handleReset} variant="contained" color="secondary">
+              Reset answer
+            </Button>
           </div>
-          <Button onClick={handleReset} variant="contained" color="secondary">
-            Reset answer
-          </Button>
-        </div>
-      )}
+        )}
     </div>
   );
 }
